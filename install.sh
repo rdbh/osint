@@ -1,7 +1,7 @@
 sudo apt-get update
 sudo apt-get -y dist-upgrade
 sudo snap refresh
-mkdir ~/Documents/Programs
+mkdir ~/Downloads/Programs
 sudo -H python3 -m pip install pip -U
 sudo -H python3 -m pip install youtube-dl -U
 sudo -H python3 -m pip install youtube-tool -U
