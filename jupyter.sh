@@ -13,3 +13,4 @@ sudo apt-get install -y nodejs
 # Install and add templates
 pip3 install jupyterlab_templates
 jupyter labextension install jupyterlab_templates
+jupyter serverextension enable --py jupyterlab_templates
