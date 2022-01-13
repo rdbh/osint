@@ -4,6 +4,10 @@ sudo apt-get update
 sudo apt-get -y dist-upgrade
 sudo snap refresh
 
+# Add local istallations to path
+PATH=$HOME/.local/bin:$PATH
+echo PATH=$HOME/.local/bin:$PATH >> ~/.zshenv
+
 # Kali Distro installations
 sudo apt-get -y install kali-tools-information-gathering
 sudo apt-get -y install instaloader
