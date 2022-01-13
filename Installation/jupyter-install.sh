@@ -38,9 +38,11 @@ jupyter serverextension enable --py jupyterlab_templates
 echo Installing GoLang!
 sudo apt-get install golang-go -qq -y
 
+cd $JUP_PATH/tools
+
 #Install Subfinder
 echo Installing Subfinder!
-GO111MODULE=on go get -u -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 sudo mkdir $JUP_PATH/tools/subfinder
 sudo cp /root/go/bin/subfinder /root/Tools/subfinder/
 
@@ -61,7 +63,7 @@ cp /root/go/bin/dnsprobe /usr/local/bin/
 #Install Infoga
 echo Installing Infoga!
 sudo git clone https://github.com/m4ll0k/Infoga.git $JUP_PATH/tools/Infoga -q
-sudo python3 $JUP_PATH/tools/Infoga/setup.py install
+python3 $JUP_PATH/tools/Infoga/setup.py install
 
 #Install ShodanScraper
 #Need to initialize Shodan API Key!
@@ -69,20 +71,20 @@ echo Installing ShodanScraper!
 
 sudo git clone https://github.com/ariel-shin/Recon-Scripts/blob/master/shodanScraper.py $JUP_PATH/tools/shodanScraper
 sudo chmod +x $JUP_PATH/tools/shodanScraper/shodanScraper.py
-sudo python3 -m easy_install shodan
+python3 -m easy_install shodan
 
 #Install CloudEnum
 echo Installing CloudEnum!
 sudo git clone https://github.com/initstring/cloud_enum.git $JUP_PATH/tools/cloud_enum -q
-sudo pip3 install -r $JUP_PATH/tools/cloud_enum/requirements.txt -q
+pip3 install -r $JUP_PATH/tools/cloud_enum/requirements.txt -q
 
 #Install GitDorker
 echo Installing GitDorker
 git clone https://github.com/obheda12/GitDorker $JUP_PATH/tools/GitDorker -q
-sudo pip3 install -r $JUP_PATH/tools/GitDorker/requirements.txt -q
+pip3 install -r $JUP_PATH/tools/GitDorker/requirements.txt -q
 rm $JUP_PATH/tools/GitDorker/*png
 
-mkdir /root/.jupyter/ssl
+mkdir ~/.jupyter/ssl
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=COUNTRY/ST=STATE/L=CITY/O=ORGANIZATION/CN=CNAME" -keyout ~/.jupyter/ssl/mykey.key -out ~/.jupyter/ssl/mycert.pem
 screen -dmS notebook jupyter-notebook --allow-root --notebook-dir ~/.jupyter
 
