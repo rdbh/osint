@@ -10,6 +10,7 @@ echo PATH=$HOME/.local/bin:$PATH >> ~/.zshenv
 
 # Kali Distro installations
 sudo apt-get -y install kali-tools-information-gathering
+sudo apt-get -y install python3-pip
 sudo apt-get -y install instaloader
 sudo apt-get -y install spiderfoot
 sudo apt-get -y install youtube-dl

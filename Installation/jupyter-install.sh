@@ -1,15 +1,10 @@
 #!/bin/bash
 # Install script for Jupyter Labs + OSINT template
-#copyright 2021 Richard Dawson
+# v1.0.1
+# (c) 2021 Richard Dawson
 
 JUP_PATH=/usr/share/jupyter
-if [ ! -d "$JUP_PATH/templates" ]; then
-	echo "Creating templates directory at ${JUP_PATH}/templates"
-	sudo mkdir -p $JUP_PATH/templates
-	sudo chmod 755 $JUP_PATH/templates
-else
-	echo "Template directory exists at ${JUP_PATH}/templates"
-fi
+
 if [ ! -d "$JUP_PATH/tools" ]; then
 	echo "Creating templates directory at ${JUP_PATH}/tools"
 	sudo mkdir -p $JUP_PATH/tools
@@ -18,8 +13,12 @@ else
 	echo "Template directory exists at ${JUP_PATH}/tools"
 fi
 
+# Install pip installer
+sudo apt-get update
+sudo apt-get -y install python3-pip
+
 # Install Jupyter Labs
-pip3 install jupyterlab
+python3 -m pip install jupyterlab
 
 # Install node.js
 curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
@@ -28,9 +27,14 @@ curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 # Install and add templates
-pip3 install jupyterlab_templates
+python3 -m pip install jupyterlab_templates
 jupyter labextension install jupyterlab_templates
 jupyter serverextension enable --py jupyterlab_templates
+
+# Download and copy template to templates folder
+wget https://raw.githubusercontent.com/rdbh/osint/main/Installation/jupyter_OSINT.ipynb
+sudo cp jupyter_OSINT.ipynb $HOME/.local/lib/python3.9/site-packages/jupyterlab_templates/templates/jupyterlab_templates
+rm jupyter_OSINT.ipynb
 
 #Tool Install
 
@@ -41,37 +45,26 @@ sudo apt-get install golang-go -qq -y
 cd $JUP_PATH/tools
 
 #Install Subfinder
-echo Installing Subfinder!
-go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-sudo mkdir $JUP_PATH/tools/subfinder
-sudo cp /root/go/bin/subfinder /root/Tools/subfinder/
+sudo apt-get -y install subfinder
 
 #Install assetfinder
-echo Installing assetfinder!
-go get -u github.com/tomnomnom/assetfinder
-sudo mkdir $JUP_PATH/tools/assetfinder
-sudo cp /root/go/bin/assetfinder $JUP_PATH/tools/assetfinder/
-cp /root/go/bin/assetfinder /usr/local/bin/
+sudo apt-get -y install assetfinder
 
 #Install dnsprobe
 echo Installing dnsprobe!
-go get -u github.com/projectdiscovery/dnsprobe
-sudo mkdir $JUP_PATH/tools/dnsprobe
-sudo cp /root/go/bin/dnsprobe $JUP_PATH/tools/dnsprobe/
-cp /root/go/bin/dnsprobe /usr/local/bin/
+sudo apt-get -y install dnsx
 
 #Install Infoga
 echo Installing Infoga!
 sudo git clone https://github.com/m4ll0k/Infoga.git $JUP_PATH/tools/Infoga -q
-python3 $JUP_PATH/tools/Infoga/setup.py install
+sudo python3 $JUP_PATH/tools/Infoga/setup.py install
 
 #Install ShodanScraper
 #Need to initialize Shodan API Key!
 echo Installing ShodanScraper!
-
-sudo git clone https://github.com/ariel-shin/Recon-Scripts/blob/master/shodanScraper.py $JUP_PATH/tools/shodanScraper
-sudo chmod +x $JUP_PATH/tools/shodanScraper/shodanScraper.py
-python3 -m easy_install shodan
+sudo git clone https://github.com/rdbh/shodan-scraper.git
+sudo chmod +x $JUP_PATH/tools/shodan-scraper/scraper.py
+pip3 install -r $JUP_PATH/tools/shodan-scraper/requirements.txt
 
 #Install CloudEnum
 echo Installing CloudEnum!
@@ -87,7 +80,3 @@ rm $JUP_PATH/tools/GitDorker/*png
 mkdir ~/.jupyter/ssl
 openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -subj "/C=COUNTRY/ST=STATE/L=CITY/O=ORGANIZATION/CN=CNAME" -keyout ~/.jupyter/ssl/mykey.key -out ~/.jupyter/ssl/mycert.pem
 screen -dmS notebook jupyter-notebook --allow-root --notebook-dir ~/.jupyter
-
-# Download and copy template to templates folder
-
-cp jupyter_OSINT.ipynb /usr/share/jupyter/notebook_templates
