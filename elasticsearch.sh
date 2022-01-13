@@ -7,4 +7,3 @@ fields=$(zenity --entry --title "Fields" --text "Enter desired data fields (sepa
 python3 crawl.py $ip 9200 $index $fields > ~/Documents/Elasticsearch/$ip.txt
 nautilus ~/Documents/Elasticsearch/
 exit
-
