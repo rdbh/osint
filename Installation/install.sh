@@ -8,9 +8,12 @@ sudo snap refresh
 PATH=$HOME/.local/bin:$PATH
 echo PATH=$HOME/.local/bin:$PATH >> ~/.zshenv
 
+# Python installation and package management 
+sudo apt-get -y install python3-pip
+sudo apt-get -y install pipenv
+
 # Kali Distro installations
 sudo apt-get -y install kali-tools-information-gathering
-sudo apt-get -y install python3-pip
 sudo apt-get -y install instaloader
 sudo apt-get -y install spiderfoot
 sudo apt-get -y install youtube-dl
@@ -21,7 +24,6 @@ mkdir ~/Downloads/Programs
 python3 -m pip install youtube-tool -U
 python3 -m pip install instalooter -U
 python3 -m pip install nested-lookup -U
-python3 -m pip install pipenv -U
 python3 -m pip install webscreenshot -U
 python3 -m pip install internetarchive -U
 python3 -m pip install waybackpy -U
@@ -30,6 +32,7 @@ python3 -m pip install holehe -U
 python3 -m pip install redditsfinder -U
 python3 -m pip install streamlink -U
 
+# Not Kali applications
 cd ~/Downloads/Programs
 git clone https://github.com/ChrisTruncer/EyeWitness.git
 cd ~/Downloads/Programs/EyeWitness
