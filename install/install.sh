@@ -1,7 +1,9 @@
 # Kali OSINT setup
+# v1.0.1
 # (C) 2022 Richard Dawson
 sudo apt-get update
 sudo apt-get -y dist-upgrade
+sudo apt -y --fix-broken install
 sudo snap refresh
 
 # Add local istallations to path
@@ -16,6 +18,7 @@ sudo apt-get -y install pipenv
 sudo apt-get -y install kali-tools-information-gathering
 sudo apt-get -y install instaloader
 sudo apt-get -y install spiderfoot
+sudo apt-get -y install photon
 sudo apt-get -y install youtube-dl
 sudo apt-get -y install internetarchive
 
@@ -34,7 +37,12 @@ python3 -m pip install streamlink -U
 
 # Not Kali applications
 cd ~/Downloads/Programs
-git clone https://github.com/ChrisTruncer/EyeWitness.git
+git pull https://github.com/rdbh/Photon.git
+cd ~/Downloads/Programs/Photon
+python3 -m pip install -r requirements.txt
+
+cd ~/Downloads/Programs
+git clone https://github.com/rdbh/EyeWitness.git
 cd ~/Downloads/Programs/EyeWitness
 cd Python/setup
 sudo -H ./setup.sh
