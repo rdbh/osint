@@ -82,7 +82,7 @@ echo
 echo Installation Complete!
 echo
 echo "Jupyter notebook will start next"
-echo "Press any key to continue or CTRL-C to abort" 
+echo "Press [Enter] to continue or CTRL-C to abort" 
 read THROWAWAY
 
 ~/Documents/osint/jupyter.sh
