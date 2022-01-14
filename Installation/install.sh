@@ -72,11 +72,17 @@ git clone https://github.com/aliparlakci/bulk-downloader-for-reddit.git
 cd ~/Downloads/Programs/bulk-downloader-for-reddit
 python3 -m pip install -r requirements.txt
 
+cd ~/Documents/osint
+sudo chmod 755 *.sh
+
 sudo apt-get -y autoremove
 sudo apt-get -y clean
 
 echo
 echo Installation Complete!
 echo
+echo "Jupyter notebook will start next"
 echo "Press any key to continue or CTRL-C to abort" 
 read THROWAWAY
+
+~/Documents/osint/jupyter.sh
