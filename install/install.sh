@@ -1,6 +1,9 @@
 # Kali OSINT setup
-# v1.0.1
+# v1.0.2
 # (C) 2022 Richard Dawson
+DOC_PATH=$HOME/Documents/Osint
+BIN_PATH=$HOME/Downloads/Programs
+
 sudo apt-get update
 sudo apt-get -y dist-upgrade
 sudo apt -y --fix-broken install
@@ -36,49 +39,58 @@ python3 -m pip install redditsfinder -U
 python3 -m pip install streamlink -U
 
 # Not Kali applications
-cd ~/Downloads/Programs
+cd $BIN_PATH
 git pull https://github.com/rdbh/Photon.git
 cd ~/Downloads/Programs/Photon
 python3 -m pip install -r requirements.txt
+mkdir -p $DOC_PATH/Photon
 
-cd ~/Downloads/Programs
+cd $BIN_PATH
 git clone https://github.com/rdbh/EyeWitness.git
 cd ~/Downloads/Programs/EyeWitness
 cd Python/setup
 sudo -H ./setup.sh
+mkdir -p $DOC_PATH/EyeWitness
 
-cd ~/Downloads/Programs
-git clone https://github.com/aboul3la/Sublist3r.git
+cd $BIN_PATH
+git clone https://github.com/rdbh/Sublist3r.git
 cd ~/Downloads/Programs/Sublist3r
 python3 -m pip install -r requirements.txt
+mkdir -p $DOC_PATH/Sublist3r
 
-cd ~/Downloads/Programs
+cd $BIN_PATH
 git clone https://github.com/laramies/theHarvester.git
 cd ~/Downloads/Programs/theHarvester
 python3 -m pip install -r requirements.txt
+mkdir -p $DOC_PATH/theHarvester
 
-cd ~/Downloads/Programs
+cd $BIN_PATH
 git clone https://github.com/sherlock-project/sherlock.git
 cd ~/Downloads/Programs/sherlock
 python3 -m pip install -r requirements.txt
+mkdir -p $DOC_PATH/sherlock
 
-cd ~/Downloads/Programs
+cd $BIN_PATH
 git clone https://github.com/WebBreacher/WhatsMyName.git
 cd ~/Downloads/Programs/WhatsMyName
 python3 -m pip install -r requirements.txt
+mkdir -p $DOC_PATH/WhatsMyName
 
-cd ~/Downloads/Programs
+cd $BIN_PATH
 git clone https://github.com/lanmaster53/recon-ng.git
 cd ~/Downloads/Programs/recon-ng
 python3 -m pip install -r REQUIREMENTS
+mkdir -p $DOC_PATH/recon-ng
 
-cd ~/Downloads/Programs
+cd $BIN_PATH
 git clone https://github.com/AmIJesse/Elasticsearch-Crawler.git
+mkdir -p $DOC_PATH/Elasticsearch
 
-cd ~/Downloads/Programs
+cd $BIN_PATH
 git clone https://github.com/aliparlakci/bulk-downloader-for-reddit.git
 cd ~/Downloads/Programs/bulk-downloader-for-reddit
 python3 -m pip install -r requirements.txt
+mkdir -p $DOC_PATH/reddit-downloader
 
 cd ~/Documents/osint
 sudo chmod 755 *.sh

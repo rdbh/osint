@@ -11,7 +11,7 @@ domain=$(zenity --entry --title "Amass" --text "Enter target domain name")
 mkdir ~/Documents/Amass/
 amass intel -whois -ip -src -d $domain  -o ~/Documents/Amass/$timestamp-$domain.1.txt 
 amass enum -src -brute -d $domain -o ~/Documents/Amass/$timestamp-$domain.2.txt -d $domain
-catfish ~/Documents/Amass/
+nautilus ~/Documents/Amass/
 exit;;
 $opt2 ) 
 domain=$(zenity --entry --title "Sublist3r" --text "Enter target domain name")
@@ -22,12 +22,14 @@ exit;;
 $opt3 ) n
 domain=$(zenity --entry --title "Photon" --text "Enter target domain name")
 mkdir ~/Documents/Photon/
-photon -u $domain -l 3 -t 100 -o ~/Documents/Photon/$timestamp-$domain
-catfish ~/Documents/Photon/$timestamp-$domain
+cd ~/Downloads/Programs/Photon/
+python3 photon.py -u $domain -l 3 -t 100 -o ~/Documents/Photon/$timestamp-$domain
+nautilus ~/Documents/Photon/$timestamp-$domain
 exit;;
 $opt4 ) 
 domain=$(zenity --entry --title "TheHarvester" --text "Enter target domain name")
 mkdir ~/Documents/theHarvester/
-theHarvester -d $domain -b baidu,bing,duckduckgo,google,yahoo,virustotal -f ~/Documents/theHarvester/$timestamp-$domain.html
+cd ~/Downloads/Programs/theHarvester/
+python3 theHarvester.py -d $domain -b baidu,bing,duckduckgo,google,yahoo,virustotal -f ~/Documents/theHarvester/$timestamp-$domain.html
 firefox ~/Documents/theHarvester/$timestamp-$domain.html	
 exit;;esac
