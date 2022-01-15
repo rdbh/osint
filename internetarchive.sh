@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
+# v1.1.0
+DOC_PATH=$(cat config | grep DOC_PATH | cut -c 10-)
+
 url=$(zenity --entry --title "Internet Archive Tool" --text "Enter target URL")
-mkdir ~/Documents/waybackpy
-mkdir ~/Documents/waybackpy/$url
-cd ~/Documents/waybackpy/$url
+
+mkdir $DOC_PATH/waybackpy/$url
+cd $DOC_PATH/waybackpy/$url
 waybackpy --url "$url" --known_urls
 waybackpy --url "$url" --oldest >> $url.txt
 waybackpy --url "$url" --newest >> $url.txt
@@ -22,5 +25,5 @@ sort -u -i $url.txt -o $url.sorted.txt
 webscreenshot -r chrome -q 100 -i $url.sorted.txt -w 1 &
 waybackpy --url "$url" --get oldest > oldest.html
 waybackpy --url "$url" --get newest > newest.html
-nautilus ~/Documents/waybackpy/$url >/dev/null
+xdg-open $DOC_PATH/waybackpy/$url >/dev/null
 exit

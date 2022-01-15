@@ -1,9 +1,10 @@
 #!/bin/bash
 # Install script for Jupyter Labs + OSINT template
-# v1.0.1
+# v1.1.0
 # (c) 2021 Richard Dawson
 
-JUP_PATH=/usr/share/jupyter
+# Get jupyter path variable from osint.conf
+JUP_PATH=$(cat config | grep JUP_PATH | cut -c 10-) 
 
 if [ ! -d "$JUP_PATH/tools" ]; then
 	echo "Creating templates directory at ${JUP_PATH}/tools"
@@ -21,7 +22,7 @@ sudo apt-get -y install python3-pip
 python3 -m pip install jupyterlab
 
 # Install node.js
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+#curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 # Just in case they aren't already installed
 #sudo apt-get install gcc g++ make
 sudo apt-get install -y nodejs
@@ -56,14 +57,14 @@ sudo apt-get -y install dnsx
 
 #Install Infoga
 echo Installing Infoga!
-sudo git clone https://github.com/m4ll0k/Infoga.git $JUP_PATH/tools/Infoga -q
+sudo git clone https://github.com/rdbh/Infoga.git $JUP_PATH/tools/Infoga -q
 sudo python3 $JUP_PATH/tools/Infoga/setup.py install
 
 #Install ShodanScraper
 #Need to initialize Shodan API Key!
 echo Installing ShodanScraper!
-sudo git clone https://github.com/rdbh/shodan-scraper.git
-sudo chmod +x $JUP_PATH/tools/shodan-scraper/scraper.py
+sudo git clone https://github.com/rdbh/shodan-scraper.git $JUP_PATH/tools/shodan-scraper -q
+sudo chmod +x $JUP_PATH/tools/shodan-scraper/scraper.py 
 pip3 install -r $JUP_PATH/tools/shodan-scraper/requirements.txt
 
 #Install CloudEnum

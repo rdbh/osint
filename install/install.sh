@@ -1,8 +1,19 @@
 # Kali OSINT setup
-# v1.0.2
+# v1.1.0
 # (C) 2022 Richard Dawson
-DOC_PATH=$HOME/Documents/Osint
+
+# Variables
 BIN_PATH=$HOME/Downloads/Programs
+DOC_PATH=$HOME/Documents/Osint
+JUP_PATH=/usr/share/jupyter
+EDITOR=catfish
+
+# Create config file
+touch ~/osint.config
+echo DOC_PATH=$DOC_PATH >> osint.config
+echo BIN_PATH=$BIN_PATH >> osint.config
+echo JUP_PATH=$JUP_PATH >> osint.config
+echo EDITOR=$EDITOR >> osint.config
 
 sudo apt-get update
 sudo apt-get -y dist-upgrade
@@ -11,7 +22,8 @@ sudo snap refresh
 
 # Add local istallations to path
 PATH=$HOME/.local/bin:$PATH
-echo PATH=$HOME/.local/bin:$PATH >> ~/.zshenv
+echo export PATH=$HOME/.local/bin:'$PATH' >> ~/.zshenv
+echo export PATH=$HOME/.local/bin:'$PATH' >> ~/.bashrc
 
 # Python installation and package management 
 sudo apt-get -y install python3-pip
@@ -24,6 +36,13 @@ sudo apt-get -y install spiderfoot
 sudo apt-get -y install photon
 sudo apt-get -y install youtube-dl
 sudo apt-get -y install internetarchive
+
+# Create output directories
+mkdir -p $DOC_PATH/gallery-dl
+mkdir -p $DOC_PATH/instalooter
+mkdir -p $DOC_PATH/metagoofil
+mkdir -p $DOC_PATH/reddit
+mkdir -p $DOC_PATH/waybackpy
 
 # Python PyPi installations
 mkdir ~/Downloads/Programs

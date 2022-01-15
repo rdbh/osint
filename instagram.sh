@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# v1.1.0
+DOC_PATH=$(cat config | grep DOC_PATH | cut -c 10-)
+
 opt1="Instalooter (Without Login)"
 opt2="Instaloader (Without Login)"
 opt3="Instalooter (With Login)"
@@ -7,31 +10,30 @@ socialmenu=$(zenity  --list  --title "Instagram Utilities" --radiolist  --column
 case $socialmenu in
 $opt1 ) 
 handle=$(zenity --entry --title "Instalooter" --text "Enter TARGET Instagram User ID")
-mkdir ~/Documents/instalooter/$handle/
+mkdir $DOC_PATH/instalooter/$handle/
 instalooter user $handle ~/Documents/instalooter/$handle/ -v -m -d -e | zenity --progress --pulsate --no-cancel --auto-close --title="Instalooter" --text="Downloading images from $handle"
-nautilus ~/Documents/instalooter/$handle/
+xdg-open $DOC_PATH/instalooter/$handle/
 exit;;
 $opt2)
-mkdir ~/Documents/instaloader
-cd ~/Documents/instaloader
+cd $DOC_PATH/instaloader
 handle=$(zenity --entry --title "Instaloader" --text "Enter TARGET Instagram User ID")
 instaloader $handle
-nautilus ~/Documents/instaloader/$handle/
+xdg-open $DOC_PATH/instaloader/$handle/
 exit;;
 $opt3) 
 username=$(zenity --entry --title "Credentials" --text "Enter YOUR Instagram Username")
 pass=$(zenity --entry --title "Credentials" --text "Enter YOUR Instagram Password")
 handle=$(zenity --entry --title "Instalooter" --text "Enter TARGET Instagram User ID")
-mkdir ~/Documents/instalooter/$handle/
+mkdir $DOC_PATH/instalooter/$handle/
 instalooter logout
 instalooter login -u $username -p $pass
-instalooter user $handle ~/Documents/instalooter/$handle/ -v -m -d -e | zenity --progress --pulsate --no-cancel --auto-close --title="Instalooter" --text="Downloading images from $handle"
-nautilus ~/Documents/instalooter/$handle/
+instalooter user $handle $DOC_PATH/instalooter/$handle/ -v -m -d -e | zenity --progress --pulsate --no-cancel --auto-close --title="Instalooter" --text="Downloading images from $handle"
+xdg-open $DOC_PATH/instalooter/$handle/
 exit;;
 $opt4) 
 username=$(zenity --entry --title "Credentials" --text "Enter YOUR Instagram Username")
 pass=$(zenity --entry --title "Credentials" --text "Enter YOUR Instagram Password")
 handle=$(zenity --entry --title "Instaloader" --text "Enter TARGET Instagram User ID")
 instaloader --login $username --password $pass $handle
-nautilus ~/Documents/instaloader/$handle/
+xdg-open $DOC_PATH/instaloader/$handle/
 exit;;esac

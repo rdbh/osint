@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# v1.1.0
+
 opt1="Display Live Stream"
 opt2="Record Live Stream"
 opt3="Play and Record Live Stream"
@@ -13,17 +15,17 @@ $opt2 )
 url=$(zenity --entry --title "Record Live Stream" --text "Enter target URL")
 cd ~/Videos
 streamlink $url best -o streamdata | zenity --progress --pulsate --auto-close --title="Record Live Stream" --text="Raw Video being saved to ~/Videos/"
-nautilus ~/Videos/
+xdg-open ~/Videos/
 exit;;
 $opt3 ) 
 url=$(zenity --entry --title "Play and Record Live Stream" --text "Enter target URL")
 cd ~/Videos
 streamlink $url best -r streamdata | zenity --progress --pulsate --auto-close --title="View/Record Live Stream" --text="Raw Video being saved to ~/Videos/"
-nautilus ~/Videos/
+xdg-open ~/Videos/
 exit;;
 $opt4 ) 
 zenity --info --text="The next window will prompt you for a target stream file." --title="Stream Converter"
 file=$(zenity --file-selection --title "Video Stream")
 ffmpeg -i $file -c copy ~/Videos/stream.mp4
-nautilus ~/Videos/
+xdg-open ~/Videos/
 exit;;esac

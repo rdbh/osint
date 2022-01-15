@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# V1.1.0
+
 opt1="Single URL"
 opt2="Multiple URLs (File)"
 eyewitness=$(zenity  --list  --title "EyeWitness" --radiolist  --column "" --column "" TRUE "$opt1" FALSE "$opt2" --height=400 --width=300)

@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# v1.1.0
+
 zenity --info --text="The next window will prompt you for a target media file. Click "Cancel" if entering a stream URL." --title="Video Utilities" --width=200
 ffmpeg_file=$(zenity --file-selection --title "Video Utilities")
 timestamp=$(date +%Y-%m-%d:%H:%M)
@@ -17,31 +19,31 @@ ffplay "$ffmpeg_file"
 exit;;
 $opt2 )
 ffmpeg -i "$ffmpeg_file" -vcodec mpeg4 -strict -2 ~/Videos/$timestamp.mp4 | zenity --progress --pulsate --no-cancel --auto-close --title="ffmpeg" --text="Converting Video to mp4"
-nautilus ~/Videos/
+xdg-open ~/Videos/
 exit;;
 $opt3 )
 mkdir ~/Videos/$timestamp-frames
 ffmpeg -y -i "$ffmpeg_file" -an -r 10 ~/Videos/$timestamp-frames/img%03d.bmp | zenity --progress --pulsate --no-cancel --auto-close --title="ffmpeg" --text="Extracting Frames"
-nautilus ~/Videos/
+xdg-open ~/Videos/
 exit;;
 $opt4 )
 ffmpeg -i "$ffmpeg_file" -strict -2 -vf "select=gt(scene\,0.003),setpts=N/(25*TB)" ~/Videos/$timestamp-low.mp4 | zenity --progress --pulsate --no-cancel --auto-close --title="ffmpeg" --text="Shortening video (Low Activity)"
-nautilus ~/Videos/
+xdg-open ~/Videos/
 exit;;
 $opt5 )
 ffmpeg -i "$ffmpeg_file" -strict -2 -vf "select=gt(scene\,0.005),setpts=N/(25*TB)" ~/Videos/$timestamp-high.mp4 | zenity --progress --pulsate --no-cancel --auto-close --title="ffmpeg" --text="Shortening video (High Activity)"
-nautilus ~/Videos/
+xdg-open ~/Videos/
 exit;;
 $opt6 )
 ffmpeg -i "$ffmpeg_file" -vn -ac 2 -ar 44100 -ab 320k -f mp3 ~/Videos/$timestamp.mp3 | zenity --progress --pulsate --no-cancel --auto-close --title="ffmpeg" --text="Extracting Audio"
-nautilus ~/Videos/
+xdg-open ~/Videos/
 exit;;
 $opt7 )
 ffmpeg -i "$ffmpeg_file" -vf transpose=0 ~/Videos/$timestamp.mp4 | zenity --progress --pulsate --no-cancel --auto-close --title="ffmpeg" --text="Rotating Video"
-nautilus ~/Videos/
+xdg-open ~/Videos/
 exit;;
 $opt8 )
 url=$(zenity --entry --title "Video Stream Download" --text "Enter URL Stream")
 ffmpeg -i "$url" -c copy ~/Videos/$timestamp-STREAM.mp4 | zenity --progress --pulsate --no-cancel --auto-close --title="ffmpeg" --text="Saving Stream"
-nautilus ~/Videos/
+xdg-opens ~/Videos/
 exit;;esac
