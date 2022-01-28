@@ -23,6 +23,14 @@ git clone https://github.com/AmIJesse/Elasticsearch-Crawler.git
 mkdir -p $DOC_PATH/Elasticsearch
 }
 
+install_email2phone () {
+cd $BIN_PATH
+git clone https://github.com/rdbh/email2phonenumber.git
+cd ~/Downloads/Programs/email2phonenumber
+python3 -m pip install -r requirements.txt
+mkdir -p $DOC_PATH/email2phonenumber
+}
+
 install_eyewitness () {
 cd $BIN_PATH
 git clone https://github.com/rdbh/EyeWitness.git
@@ -30,6 +38,15 @@ cd ~/Downloads/Programs/EyeWitness
 cd Python/setup
 sudo -H ./setup.sh
 mkdir -p $DOC_PATH/EyeWitness
+}
+
+install_google_earth () {
+cd $BIN_PATH
+mkdir google-earth && cd google-earth
+wget https://dl.google.com/dl/earth/client/current/google-earth-stable_current_amd64.deb
+sudo dpkg -i google-earth-stable*.deb
+cd $BIN_PATH
+rm -rf google-earth
 }
 
 install_osintgram () {
@@ -161,16 +178,23 @@ case $OS_NAME in
     #non-repository tools
     install_carbon14
 	install_elasticsearch
+	install_email2phone
+	install_google_earth
 	install_reddit_downloader
-    
+	    
 	# Python tools
 	python_install holehe
 	python_install instalooter
+	python_install socialscan
+	python_install webscreenshot
+	python-install youtube-tool
     ;;
   Ubuntu)
     #non-repository tools
     install_carbon14
 	install_elasticsearch
+	install_email2phone
+	install_google_earth
 	install_reddit_downloader
 	
 	# Python tools
@@ -178,6 +202,9 @@ case $OS_NAME in
 	python_install instaloader
 	python_install instalooter
 	python_install internetarchive
+	python_install socialscan
+	python_install webscreenshot
+	python-install youtube-tool
 	;;
   *)
     echo "Unrecognized OS: ${OS_NAME}"
@@ -200,11 +227,8 @@ mkdir -p $DOC_PATH/waybackpy
 # Python PyPi installations
 python3 -m pip install nested-lookup -U
 python3 -m pip install redditsfinder -U
-python3 -m pip install socialscan -U
 python3 -m pip install streamlink -U
 python3 -m pip install waybackpy -U
-python3 -m pip install webscreenshot -U
-python3 -m pip install youtube-tool -U
 
 wget https://raw.githubusercontent.com/rdbh/osint/dev_rick/install/jupyter-install.sh
 sudo jupyter-install.sh
