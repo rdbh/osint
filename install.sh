@@ -5,7 +5,7 @@
 
 # Configuration Variables
 BIN_PATH=$HOME/Downloads/Programs
-DOC_PATH=$HOME/Documents/Osint
+DOC_PATH=$HOME/Documents/osint
 JUP_PATH=/usr/share/jupyter
 
 # Install functions for non-repository tools
@@ -132,6 +132,9 @@ sudo apt-get -y dist-upgrade
 sudo apt -y --fix-broken install
 sudo snap refresh
 
+# Install git
+sudo apt-get -y install git
+
 # Add local installations to path
 PATH=$HOME/.local/bin:$PATH
 echo export PATH=$HOME/.local/bin:'$PATH' >> ~/.bashrc
@@ -172,6 +175,7 @@ case $OS_NAME in
 	
 	# Python tools
 	python_install holehe
+	python_install instaloader
 	python_install instalooter
 	python_install internetarchive
 	;;
@@ -179,6 +183,12 @@ case $OS_NAME in
     echo "Unrecognized OS: ${OS_NAME}"
 	;;
 esac
+
+# Clone the osint directory
+cd $HOME/Documents
+git clone https://github.com/rdbh/osint.git
+cd osint/tools
+sudo chmod 755 *.sh
 	
 # Create output directories
 mkdir -p $DOC_PATH/gallery-dl
@@ -196,8 +206,9 @@ python3 -m pip install waybackpy -U
 python3 -m pip install webscreenshot -U
 python3 -m pip install youtube-tool -U
 
-cd ~/Documents/osint
-sudo chmod 755 *.sh
+wget https://raw.githubusercontent.com/rdbh/osint/dev_rick/install/jupyter-install.sh
+sudo jupyter-install.sh
+rm jupyter-install.sh
 
 sudo apt-get -y autoremove
 sudo apt-get -y clean
@@ -208,4 +219,4 @@ echo
 echo "Jupyter notebook will start next"
 read -p "Press [Enter] to continue or CTRL-C to abort" THROWAWAY
 
-~/Documents/osint/jupyter.sh
+~/Documents/osint/tools/jupyter.sh
