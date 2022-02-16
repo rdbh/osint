@@ -4,14 +4,14 @@
 # (C) 2022 Richard Dawson
 
 # Configuration Variables
-BIN_PATH=$HOME/Downloads/Programs
-DOC_PATH=$HOME/Documents/osint
+BIN_PATH=${HOME}/Downloads/Programs
+DOC_PATH=${HOME}/Documents/osint
 JUP_PATH=/usr/share/jupyter
 
 # Install functions for non-repository tools
 install_carbon14 () {
 cd $BIN_PATH
-git pull https://github.com/rdbh/Carbon14.git
+git clone https://github.com/rdbh/Carbon14.git
 cd ~/Downloads/Programs/Carbon14
 python3 -m pip install -r requirements.txt
 mkdir -p $DOC_PATH/Carbon14
@@ -121,6 +121,10 @@ cd ${1}
 python3 -m pip install "${1}" -U
 }
 
+#-------------------
+# MAIN
+#-------------------
+
 # Get OS distribution
 if [[ "${1}" == "Kali" ]]; then 
   OS_NAME="Kali"
@@ -139,9 +143,12 @@ fi
 
 # Create config file
 touch ~/osint.config
-echo DOC_PATH=$DOC_PATH >> osint.config
+echo DOC_PATH=$DOC_PATH > osint.config
 echo BIN_PATH=$BIN_PATH >> osint.config
 echo JUP_PATH=$JUP_PATH >> osint.config
+
+# Create program path
+mkdir -p "${BIN_PATH}"
 
 # Bring OS up to date
 sudo apt-get update
@@ -244,7 +251,7 @@ rm jupyter-install.sh
 cd $BIN_PATH
 git clone https://github.com/1modm/petereport
 cd petereport
-docker-compose up --build
+sudo docker-compose up --build
 
 sudo apt-get -y autoremove
 sudo apt-get -y clean
