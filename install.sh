@@ -152,6 +152,12 @@ sudo snap refresh
 # Install git
 sudo apt-get -y install git
 
+# Install Docker
+sudo apt install -y docker.io
+sudo apt install -y docker-compose
+sudo systemctl enable docker --now
+sudo usermod -aG docker $USER
+
 # Add local installations to path
 PATH=$HOME/.local/bin:$PATH
 echo export PATH=$HOME/.local/bin:'$PATH' >> ~/.bashrc
@@ -233,6 +239,12 @@ python3 -m pip install waybackpy -U
 wget https://raw.githubusercontent.com/rdbh/osint/dev_rick/install/jupyter-install.sh
 sudo jupyter-install.sh
 rm jupyter-install.sh
+
+# Install PeTeReport
+cd $BIN_PATH
+git clone https://github.com/1modm/petereport
+cd petereport
+docker-compose up --build
 
 sudo apt-get -y autoremove
 sudo apt-get -y clean
