@@ -3,10 +3,41 @@
 # Currently building for Ubuntu or Kali - others by request
 # (C) 2022 Richard Dawson
 
+## Variables
 # Configuration Variables
 BIN_PATH=${HOME}/Downloads/Programs
 DOC_PATH=${HOME}/Documents/osint
 JUP_PATH=/usr/share/jupyter
+
+## Functions
+
+check_root() {
+  # Check to ensure script is not run as root
+  if [[ "${UID}" -eq 0 ]]; then
+    UNAME=$(id -un)
+    printf "\nThis script should not be run as root.\n\n" >&2
+    usage
+  fi
+}
+
+echo_out() {
+  # Get input from stdin OR $1
+  local MESSAGE=${1:-$(</dev/stdin)}
+  
+  # Check to see if we need a \n
+  if [[ "${2}" == 'n' ]]; then
+    :
+  else
+    MESSAGE="${MESSAGE}\n"
+  fi
+  
+  # Decide if we output to console and log or just log
+  if [[ "${VERBOSE}" = 'true' ]]; then
+    printf "${MESSAGE}" | tee /dev/fd/3
+  else 
+    printf "${MESSAGE}" >> ${LOG_FILE}
+  fi
+}
 
 # Install functions for non-repository tools
 install_carbon14 () {
@@ -81,20 +112,26 @@ python3 -m pip install -r requirements.txt
 mkdir -p $DOC_PATH/reddit-downloader
 }
 
-install_sublist3r (){
-cd $BIN_PATH
-git clone https://github.com/rdbh/Sublist3r.git
-cd ~/Downloads/Programs/Sublist3r
-python3 -m pip install -r requirements.txt
-mkdir -p $DOC_PATH/Sublist3r
-}
-
 install_sherlock () {
 cd $BIN_PATH
 git clone https://github.com/sherlock-project/sherlock.git
 cd ~/Downloads/Programs/sherlock
 python3 -m pip install -r requirements.txt
 mkdir -p $DOC_PATH/sherlock
+}
+
+install_spiderfoot () {
+  sudo apt-get -y install spiderfoot
+  sudo mkdir -p /usr/share/spiderfoot/correlations
+  touch $HOME/.spiderfoot/passwd
+}
+
+install_sublist3r (){
+cd $BIN_PATH
+git clone https://github.com/rdbh/Sublist3r.git
+cd ~/Downloads/Programs/Sublist3r
+python3 -m pip install -r requirements.txt
+mkdir -p $DOC_PATH/Sublist3r
 }
 
 install_theharvester () {
@@ -147,7 +184,7 @@ echo DOC_PATH=$DOC_PATH > osint.config
 echo BIN_PATH=$BIN_PATH >> osint.config
 echo JUP_PATH=$JUP_PATH >> osint.config
 
-# Create program path
+# Create program paths
 mkdir -p "${BIN_PATH}"
 
 # Bring OS up to date
@@ -185,7 +222,7 @@ case $OS_NAME in
     sudo apt-get -y install internetarchive
     sudo apt-get -y install photon
     sudo apt-get -y install sherlock
-    sudo apt-get -y install spiderfoot
+    install_spiderfoot
     sudo apt-get -y install youtube-dl
   
     #non-repository tools
